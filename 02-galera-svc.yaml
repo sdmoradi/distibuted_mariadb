@@ -1,0 +1,26 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: db-mariadb-galera-headless
+  namespace: "db"
+  labels:
+    app.kubernetes.io/name: mariadb-galera
+    app.kubernetes.io/instance: db
+spec:
+  type: ClusterIP
+  clusterIP: None
+  ports:
+    - name: galera
+      port: 4567
+      targetPort: galera
+    - name: ist
+      port: 4568
+      targetPort: ist
+    - name: sst
+      port: 4444
+      targetPort: sst
+  publishNotReadyAddresses: true
+  selector:
+    app.kubernetes.io/name: mariadb-galera
+    app.kubernetes.io/instance: db
